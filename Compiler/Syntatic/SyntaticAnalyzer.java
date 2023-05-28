@@ -4,24 +4,22 @@ import java.io.IOException;
 
 import Compiler.Lexical.*;
 import Compiler.Lexical.Tokens.*;
-import Compiler.SymbolTable.SymbolTable;
 import Compiler.Syntatic.Exceptions.*;
 
 public class SyntaticAnalyzer{
 
     private Lexer lexer;
-    private SymbolTable symbolTable;
     private Token tok;
     
-    public SyntaticAnalyzer(Lexer lexer, SymbolTable symbolTable){
+    public SyntaticAnalyzer(Lexer lexer){
         this.lexer = lexer;
-        this.symbolTable = symbolTable;
     }    
 
 
     public void start(){
         tok = getToken();
         program();
+        eat(Tag.EOF);
     }
  
     private Token getToken(){

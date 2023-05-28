@@ -22,7 +22,6 @@ public class Lexer {
         try {
             file = new FileReader(fileName);
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado");
             throw e;
         }
         this.symbolTable = symbolTable;
