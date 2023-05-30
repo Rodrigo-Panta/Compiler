@@ -58,7 +58,6 @@ public class SyntaticAnalyzer{
     // program ::= program identifier [decl-list] begin stmt-list end "."
     private void program(){
         eat(Tag.PRG);
-        eat(Tag.BEG);
         eat(Tag.ID);
         if(tok.getTag() != Tag.BEG)
             declList();
