@@ -36,7 +36,7 @@ public class SyntaticAnalyzer{
     }
 
     private void eat(int tag){
-        if(tok.getTag() == Tag.EOF){
+        if(tag != Tag.EOF && tok.getTag() == Tag.EOF){
             throw new UnexpectedEOFException();
         }
         if(tag == tok.getTag())
