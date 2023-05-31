@@ -1,8 +1,0 @@
-program teste_5 begin 
- a,  b is float;
-c is 'p';
- read (a);
- read(b);
- if (a==b) 
-write(c);
-end.
