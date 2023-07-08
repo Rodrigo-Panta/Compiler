@@ -1,0 +1,11 @@
+program teste7
+    a,  b is float;
+    c is char;
+begin
+
+    read (a);
+    read(b);
+    if (a==b) then
+        write(c)
+    end
+end.    

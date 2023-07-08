@@ -1,0 +1,11 @@
+program teste6
+    a,  b is float;
+begin
+
+    read (a);
+    read(b);
+    if (a>=b) then 
+
+        write(c)
+    end    
+end.    
