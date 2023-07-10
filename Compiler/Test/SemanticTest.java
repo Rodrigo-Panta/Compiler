@@ -17,7 +17,7 @@ public class SemanticTest {
             Lexer lexer = new Lexer(args[0], symbolTable);
             SyntaticAnalyzer syntaticAnalyzer = new SyntaticAnalyzer(lexer, symbolTable);
             SemanticResult result = syntaticAnalyzer.start();
-            System.out.println(result.type);
+            System.out.println("Resultado: " + result.type);
             if(!result.isError())
                 System.out.println("Semantic Analysis completed successfully!");
             else {
