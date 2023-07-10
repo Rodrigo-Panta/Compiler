@@ -14,11 +14,9 @@ public class SyntaticAnalyzer{
 
     private Lexer lexer;
     private Token tok;
-    private SymbolTable symbolTable;
     
     public SyntaticAnalyzer(Lexer lexer, SymbolTable table){
         this.lexer = lexer;
-        symbolTable = table;
     }    
 
 
@@ -169,6 +167,7 @@ public class SyntaticAnalyzer{
     // assign-stmt ::= identifier "=" simple_expr
     private SemanticResult assignStmt() {
         Word old = (Word) tok;
+        int line = Lexer.line;
         eat(Tag.ID);
         SemanticResult resultId = new SemanticResult(old.getType());
         eat('=');
@@ -176,7 +175,7 @@ public class SyntaticAnalyzer{
 
         if(resultId.type == resultExpr.type || resultId.type == SemanticResultType.TYPE_FLOAT && resultExpr.type == SemanticResultType.TYPE_INT)
             return resultId.okIfNotError();
-        return new SemanticResult(null, SemanticResult.getIncompatibleVariableTypesErrorMessage(Lexer.line));
+        return new SemanticResult(null, SemanticResult.getIncompatibleVariableTypesErrorMessage(line));
     }
 
     // if-stmt ::=	if condition then stmt-list end-else
@@ -252,9 +251,10 @@ public class SyntaticAnalyzer{
         eat(Tag.READ);
         eat('(');
         Word old = (Word) tok;
+        int line = Lexer.line;
         eat(Tag.ID);
         eat(')');
-        return new SemanticResult(old.getType(), SemanticResult.getUndefinedVariableErrorMessage(Lexer.line, old.getLexeme()));       
+        return new SemanticResult(old.getType(), SemanticResult.getUndefinedVariableErrorMessage(line, old.getLexeme()));       
     }
 
     // write-stmt ::= write "(" writable ")"
@@ -350,11 +350,12 @@ public class SyntaticAnalyzer{
             eat('!');
         else if(tok.getTag() == '-')
             eat('-');    
+        int line  = Lexer.line;
         SemanticResult result = factor();
         if(result.isNumericOrChar()) {
             return result;
         } else {
-            return new SemanticResult(null, SemanticResult.getExpectedNumericErrorMessage(Lexer.line));
+            return new SemanticResult(null, SemanticResult.getExpectedNumericErrorMessage(line));
         }
 
     }
@@ -370,8 +371,9 @@ public class SyntaticAnalyzer{
             result = new SemanticResult(old.getType());
         } else if(tok.getTag()=='('){
             eat('(');
+            int line = Lexer.line;
             result = expression();
-            if(!result.isNumericOrChar()) result = new SemanticResult(null, SemanticResult.getUnexpectedTypeErrorMessage(Lexer.line));
+            if(!result.isNumericOrChar()) result = new SemanticResult(null, SemanticResult.getUnexpectedTypeErrorMessage(line));
             eat(')');
         } else {
             result = constant();
