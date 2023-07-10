@@ -1,10 +1,11 @@
 package Compiler.Test;
 
 import Compiler.Lexical.Lexer;
+import Compiler.Semantic.SemanticResult;
 import Compiler.SymbolTable.SymbolTable;
 import Compiler.Syntatic.SyntaticAnalyzer;
 
-public class SyntaticTest {
+public class SemanticTest {
     public static void main(String[] args) {
         if(args.length < 1){
             System.out.println("Usage: java SyntaticTest filename");
@@ -15,8 +16,13 @@ public class SyntaticTest {
             SymbolTable symbolTable = new SymbolTable();
             Lexer lexer = new Lexer(args[0], symbolTable);
             SyntaticAnalyzer syntaticAnalyzer = new SyntaticAnalyzer(lexer, symbolTable);
-            syntaticAnalyzer.start();
-            System.out.println("Syntatic Analysis completed successfully!");
+            SemanticResult result = syntaticAnalyzer.start();
+            System.out.println(result.type);
+            if(!result.isError())
+                System.out.println("Semantic Analysis completed successfully!");
+            else {
+                System.out.println(result.message);
+            } 
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
